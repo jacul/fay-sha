@@ -1,0 +1,43 @@
+# Build output and generated Swift/Xcode state
+.build/
+.swiftpm/
+build/
+dist/
+DerivedData/
+*.app/
+*.dSYM/
+*.dmg
+*.pkg
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcscmblueprint
+
+# Machine-specific editor and agent settings
+.idea/
+.vscode/
+.codex/
+.agents/
+.cache/
+.DS_Store
+._*
+*.swp
+*.swo
+*~
+*.log
+
+# Local environment, credentials, and signing material
+.env
+.env.*
+!.env.example
+.aws/
+.ssh/
+.credentials/
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.mobileprovision
+*.provisionprofile
+*.local.xcconfig
