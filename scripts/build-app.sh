@@ -17,6 +17,8 @@ swift build "${BUILD_ARGS[@]}"
 BIN_DIR="$(swift build "${BUILD_ARGS[@]}" --show-bin-path)"
 APP="dist/FaySHA.app"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+bash scripts/build-icon.sh
+cp dist/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 cp "$BIN_DIR/FaySHA" "$APP/Contents/MacOS/FaySHA"
 # Remove debug records and local symbols before replacing the code signature.
 xcrun strip -S -x "$APP/Contents/MacOS/FaySHA"
@@ -34,6 +36,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <key>CFBundleIdentifier</key><string>local.faysha.app</string>
     <key>CFBundleName</key><string>FaySHA</string>
     <key>CFBundleDisplayName</key><string>FaySHA</string>
+    <key>CFBundleIconFile</key><string>AppIcon</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>1.0.0</string>
     <key>CFBundleVersion</key><string>1</string>
