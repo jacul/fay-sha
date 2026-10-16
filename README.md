@@ -4,7 +4,7 @@ A native macOS file checksum app in a thin, rounded 520 × 72 floating bar. It s
 
 ## Run
 
-Requires macOS 13 or later and Xcode command line tools to build.
+Requires macOS 13 or later. Building requires Swift 6 or later from Xcode or its command line tools.
 
 ```sh
 bash scripts/build-app.sh
@@ -36,6 +36,19 @@ swift test
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## GitHub publication
+
+GitHub Actions runs tests and packages a universal app for Apple silicon and Intel Macs.
+Version tags create draft releases for review. `VERSION` sets the app version.
+
+To build the release archive locally:
+
+```sh
+bash scripts/package-release.sh
+```
+
+The ZIP archive and its SHA-256 checksum appear in `dist/`.
 
 ## Signing configuration
 

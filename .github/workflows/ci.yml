@@ -1,0 +1,29 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Test
+        run: swift test --cache-path .build/cache
+      - name: Build and verify universal archive
+        run: bash scripts/package-release.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: FaySHA-macOS-universal
+          path: |
+            dist/*.zip
+            dist/*.sha256
+          if-no-files-found: error

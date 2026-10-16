@@ -1,0 +1,34 @@
+name: Prepare draft release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: macos-15
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Check tag version
+        run: test "$GITHUB_REF_NAME" = "v$(cat VERSION)"
+      - name: Test
+        run: swift test --cache-path .build/cache
+      - name: Package
+        run: bash scripts/package-release.sh
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/*.zip dist/*.sha256 \
+            --verify-tag --draft --title "FaySHA $GITHUB_REF_NAME" \
+            --notes-file .github/RELEASE_NOTES.md
