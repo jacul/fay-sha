@@ -549,8 +549,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 }
 
-let application = NSApplication.shared
-let delegate = AppDelegate()
-application.setActivationPolicy(.regular)
-application.delegate = delegate
-application.run()
+@main
+@MainActor
+enum FaySHAApp {
+    static func main() {
+        let application = NSApplication.shared
+        let delegate = AppDelegate()
+        application.setActivationPolicy(.regular)
+        application.delegate = delegate
+        withExtendedLifetime(delegate) {
+            application.run()
+        }
+    }
+}
